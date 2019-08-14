@@ -215,7 +215,12 @@ if (OTFFT_WITH_AVX2)
   list(APPEND OTFFT_BACKENDS ${LIBNAME}_avx2)
 endif()
 
-MESSAGE("Using backends ${OTFFT_BACKENDS}")
+# allow use of LOCATION property
+if(POLICY CMP0026)
+  cmake_policy(SET CMP0026 OLD)
+endif(POLICY CMP0026)
+
+MESSAGE(STATUS "Using backends ${OTFFT_BACKENDS}")
 
 include(mergestaticlibs)
 merge_static_libs(${LIBNAME}
@@ -301,7 +306,7 @@ elseif (${CMAKE_CXX_COMPILER_ID} MATCHES "Intel")
 elseif (MSVC OR ${CMAKE_CXX_COMPILER_ID} MATCHES "MSVC")
   message(STATUS "Optimize for MSVC compiler")
   if ("${CMAKE_VERSION}" VERSION_EQUAL "3.1" OR "${CMAKE_VERSION}" VERSION_GREATER "3.1")
-    message("Configure PDB file generation")
+    message(STATUS "Configure PDB file generation")
     set(ADDITIONAL_FLAGS
       " /Zi "
     )

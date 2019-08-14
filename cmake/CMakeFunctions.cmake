@@ -32,14 +32,14 @@ function(set_library_export_flag TARGETNAME)
     # only add xxxx_LIB for static libs
     # to remove declspec specifiers
     if(_target_type STREQUAL STATIC_LIBRARY)
-      message("Setting ${_lib_name}_LIB for ${TARGETNAME}")
+      message(STATUS "Setting ${_lib_name}_LIB for ${TARGETNAME}")
       set_property(TARGET ${TARGETNAME}
         APPEND PROPERTY COMPILE_DEFINITIONS
         ${_lib_name}_LIB
         )
     elseif(_target_type STREQUAL SHARED_LIBRARY)
       if(NOT _lib_name STREQUAL ${TARGETNAME})
-        message("Setting ${_lib_name}_LIB} for ${TARGETNAME}")
+        message(STATUS "Setting ${_lib_name}_LIB} for ${TARGETNAME}")
         set_property(TARGET ${TARGETNAME}
           APPEND PROPERTY COMPILE_DEFINITIONS
           ${_lib_name}_LIB
