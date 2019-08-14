@@ -215,11 +215,6 @@ if (OTFFT_WITH_AVX2)
   list(APPEND OTFFT_BACKENDS ${LIBNAME}_avx2)
 endif()
 
-# allow use of LOCATION property
-if(POLICY CMP0026)
-  cmake_policy(SET CMP0026 OLD)
-endif(POLICY CMP0026)
-
 MESSAGE("Using backends ${OTFFT_BACKENDS}")
 
 include(mergestaticlibs)
