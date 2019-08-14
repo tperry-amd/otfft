@@ -215,25 +215,7 @@ if (OTFFT_WITH_AVX2)
   list(APPEND OTFFT_BACKENDS ${LIBNAME}_avx2)
 endif()
 
-# allow use of LOCATION property
-if(POLICY CMP0026)
-  cmake_policy(SET CMP0026 OLD)
-endif(POLICY CMP0026)
-
 MESSAGE(STATUS "Using backends ${OTFFT_BACKENDS}")
-
-include(mergestaticlibs)
-merge_static_libs(${LIBNAME}
-  ${LIBNAME}_common
-  ${OTFFT_BACKENDS}
-)
-set_property(TARGET ${LIBNAME} APPEND_STRING PROPERTY COMPILE_PDB_NAME ${LIBNAME})
-
-target_include_directories(${LIBNAME} SYSTEM
-  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inc
-)
-
-set_library_export_flag(${LIBNAME})
 
 SetFullOptimization()
 
@@ -371,21 +353,6 @@ if (OTFFT_WITH_AVX2)
   set_property(TARGET ${LIBNAME}_avx2 APPEND_STRING PROPERTY
     COMPILE_FLAGS
     " ${AVX2_FLAGS} "
-  )
-endif()
-
-#
-# add this to Visual Studio group app
-set_target_properties(${LIBNAME} PROPERTIES FOLDER "3rd_party")
-
-#
-# 3rd-party build support
-if (CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
-  install(TARGETS ${LIBNAME} ARCHIVE
-    DESTINATION lib
-  )
-  install(FILES ${PUBLIC_OTFFT_HEADER_FILES}
-    DESTINATION include
   )
 endif()
 
